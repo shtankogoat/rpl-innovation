@@ -38,7 +38,7 @@ nav .btn{padding:14px 22px;font-size:13px;color:#fff}
 .burger span{display:block;height:2px;background:#fff;margin:7px 8px}
 
 /* hero */
-.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;color:#fff;background:var(--ink);overflow:hidden;padding:130px 0 90px}
+.hero{position:relative;min-height:100vh;min-height:100svh;min-height:var(--hh,100svh);display:flex;align-items:center;color:#fff;background:var(--ink);overflow:hidden;padding:130px 0 90px}
 .hero .bg{position:absolute;inset:-4%;background:url(img/stadium.jpg) center 40%/cover;filter:saturate(.6) brightness(.75);animation:kb 26s ease-in-out infinite alternate}
 @keyframes kb{to{transform:scale(1.1) translate(-1.5%,-1%)}}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(7,17,46,.97) 15%,rgba(14,32,80,.82) 50%,rgba(0,80,200,.35)),linear-gradient(0deg,var(--ink),transparent 40%)}
@@ -89,7 +89,7 @@ section{padding:120px 0;position:relative}
 .join{margin-top:56px;display:flex;gap:28px;align-items:center;justify-content:center;text-align:center}.join:before,.join:after{content:"";flex:1;height:2px;max-width:160px;background:linear-gradient(90deg,transparent,var(--blue))}.join:after{background:linear-gradient(90deg,var(--red),transparent)}
 .join p{font:800 clamp(18px,1.9vw,28px)/1.4 Unbounded;text-transform:uppercase;max-width:1000px;color:var(--navy)}
 .join p b{color:var(--blue);font-weight:900}
-@media (max-width:860px){.duo{grid-template-columns:1fr}.lead-card.rpl,.lead-card.alfa{clip-path:none;margin:0;padding:44px 26px;min-height:0}.lead-card.alfa{padding-top:110px;grid-row:auto;display:flex;flex-direction:column}.lead-card.rpl{padding-bottom:110px;grid-row:auto;display:flex;flex-direction:column}.lead-card .lbl{align-self:flex-start}.x{width:120px;height:120px}.x img{height:76px}}
+@media (max-width:860px){.duo{grid-template-columns:1fr}.lead-card.rpl,.lead-card.alfa{clip-path:none;margin:0;padding:44px 26px;min-height:0}.lead-card.alfa{padding-top:110px;grid-row:auto;display:flex;flex-direction:column}.lead-card.rpl{padding-bottom:110px;grid-row:auto;display:flex;flex-direction:column}.lead-card .lbl{align-self:flex-start}.x{width:120px;height:120px;left:50%}.x img{height:76px}}
 
 /* challenges */
 .dark{background:var(--navy);color:#fff;overflow:hidden}
@@ -254,9 +254,14 @@ footer .org a{color:#8fc4ff}footer .org a:hover{color:#fff}
 }
 @media (max-width:860px){
   nav{display:none}.burger{display:block}
-  .mnav.open{display:flex;position:fixed;inset:0;z-index:50;background:var(--ink);flex-direction:column;justify-content:center;gap:26px;padding:30px}
-  .mnav a{color:#fff;font:800 22px Unbounded;text-transform:uppercase}
-  .mnav .x2{position:absolute;top:24px;right:20px;background:none;border:0;color:#fff;font-size:36px;cursor:pointer}
+  .mnav.open{display:flex;position:fixed;z-index:50;top:12px;left:12px;right:12px;flex-direction:column;background:var(--ink);padding:64px 22px 22px;box-shadow:0 0 0 100vmax rgba(7,17,46,.55),0 30px 60px -20px rgba(0,0,0,.6);animation:mn .3s cubic-bezier(.2,.7,.2,1)}
+  @keyframes mn{from{opacity:0;transform:translateY(-14px)}}
+  .mnav.open:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--blue),var(--red))}
+  .mnav a{display:flex;justify-content:space-between;align-items:center;color:#fff;font:800 16px Unbounded;text-transform:uppercase;padding:16px 4px;border-bottom:1px solid rgba(255,255,255,.1)}
+  .mnav a:not(.btn):after{content:"";width:11px;height:11px;background:var(--blue);clip-path:polygon(0 0,45% 0,100% 50%,45% 100%,0 100%,55% 50%)}
+  .mnav a.btn{justify-content:center;border:0;margin-top:20px;font:800 14px Manrope;padding:18px}
+  .mnav .x2{position:absolute;top:14px;right:14px;width:40px;height:40px;background:rgba(255,255,255,.08);border:0;color:#fff;font-size:26px;line-height:1;cursor:pointer}
+  .mnav .mt{position:absolute;top:24px;left:26px;font:800 11px Manrope;letter-spacing:.16em;text-transform:uppercase;color:#8fc4ff}
 
   .aud{grid-template-columns:1fr}
   .stats{grid-template-columns:1fr 1fr}
@@ -280,6 +285,7 @@ footer .org a{color:#8fc4ff}footer .org a:hover{color:#fff}
 }
 .card .pl{stroke:#fff}.card:hover .pl{stroke:var(--c)}
 .card,.au,.step,.qs li,.tl>div,.lead-card,.stats div,.cd div{cursor:pointer}
+@media (max-width:560px){.dl-top{justify-content:center;text-align:center}.dl-top .eyebrow{justify-content:center}.tl>div{text-align:center}.tl i{margin:0 auto 24px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style>
 </head>
@@ -295,8 +301,8 @@ footer .org a{color:#8fc4ff}footer .org a:hover{color:#fff}
     <button class="burger" aria-label="Меню" onclick="mnav.classList.add('open')"><span></span><span></span><span></span></button>
   </div>
 </header>
-<div class="mnav" id="mnav" onclick="if(event.target.tagName==='A'||event.target.classList.contains('x2'))this.classList.remove('open')">
-  <button class="x2" aria-label="Закрыть">×</button>
+<div class="mnav" id="mnav" onclick="if(event.target.closest('a')||event.target.classList.contains('x2'))this.classList.remove('open')">
+  <span class="mt">Меню</span><button class="x2" aria-label="Закрыть">×</button>
   <a href="#about">О центре</a><a href="#tech">Направления</a><a href="#process">Как работаем</a><a href="#apply">Отбор</a><a href="#form" class="btn">Подать заявку</a>
 </div>
 
@@ -537,11 +543,12 @@ document.querySelectorAll('[data-n]').forEach(b=>{const n=+b.dataset.n;let t0;co
 // hero network canvas
 (function(){const c=document.getElementById('net'),x=c.getContext('2d');let W,H,P=[];const dpr=Math.min(devicePixelRatio,2);
 function rs(){W=c.offsetWidth;H=c.offsetHeight;c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);const n=Math.min(80,Math.floor(W*H/20000));P=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*1.8+.6,red:Math.random()<.5}))}
-rs();addEventListener('resize',rs);
+let lw=innerWidth;document.documentElement.style.setProperty('--hh',innerHeight+'px');rs();addEventListener('resize',()=>{if(innerWidth===lw)return;lw=innerWidth;document.documentElement.style.setProperty('--hh',innerHeight+'px');rs()});
 function f(){x.clearRect(0,0,W,H);for(let i=0;i<P.length;i++){const p=P[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
 for(let j=i+1;j<P.length;j++){const q=P[j],d=Math.hypot(p.x-q.x,p.y-q.y);if(d<140){x.strokeStyle=`rgba(0,128,255,${.35*(1-d/140)})`;x.lineWidth=1;x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.stroke()}}
 if(p.red){x.shadowColor="#EF3124";x.shadowBlur=10}x.fillStyle=p.red?"#EF3124":"#8fc4ff";x.beginPath();x.arc(p.x,p.y,p.red?p.r+1.2:p.r,0,7);x.fill();x.shadowBlur=0}
 if(!matchMedia('(prefers-reduced-motion:reduce)').matches)requestAnimationFrame(f)}f()})();
+document.addEventListener("click",e=>{if(mnav.classList.contains("open")&&!e.target.closest("#mnav,.burger"))mnav.classList.remove("open")});
 // clickable blocks → form (card/au also preselect area/type)
 document.querySelectorAll('.card,.au,.step,.tl>div').forEach(el=>el.addEventListener('click',()=>{
   const t=el.querySelector('h3')?.textContent||'';
