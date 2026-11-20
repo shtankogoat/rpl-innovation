@@ -2,12 +2,13 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https:; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Инновационный центр РПЛ · Альфа-Банк</title>
 <meta name="description" content="Альфа-Банк Инновационный центр РПЛ. Объединяем технологии, бизнес и футбол, чтобы создавать, тестировать и внедрять инновации в российскую спортивную индустрию.">
 <link rel="icon" href="img/logo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="fonts/fonts.css" rel="stylesheet">
 <style>
 :root{--navy:#0E2050;--navy2:#0a1840;--ink:#07112e;--blue:#0080FF;--red:#EF3124;--ivory:#F8F8F8;--txt:#0E2050;--mut:#5b6787}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -191,7 +192,7 @@ form:before{content:"";position:absolute;left:-1px;right:-1px;top:-1px;height:4p
 .fld.bad input,.fld.bad textarea{border-color:var(--red);background:#fff1f0}
 .fld.bad{animation:shake .4s}
 @keyframes shake{25%{transform:translateX(-6px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
-.sel{position:relative}
+.sel{position:relative}.sel>button.ph{color:#9aa6c0;font-weight:500}
 .sel>button{cursor:pointer;padding-right:44px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sel>button:after{content:"";position:absolute;right:18px;top:50%;width:9px;height:9px;border-right:2px solid var(--blue);border-bottom:2px solid var(--blue);transform:translateY(-70%) rotate(45deg);transition:.25s}
 .sel.open>button:after{transform:translateY(-20%) rotate(-135deg)}
@@ -246,11 +247,13 @@ footer .org a{color:#8fc4ff}footer .org a:hover{color:#fff}
 .mnav{display:none}
 @media (max-width:1080px){
   .cards{grid-template-columns:repeat(2,1fr)}
-  .proc{grid-template-columns:1fr;gap:8px}
-  .step,.step:first-child{clip-path:none;margin:0;min-height:0;padding:26px 28px;display:grid;grid-template-columns:70px 1fr;column-gap:10px}
+  .proc{grid-template-columns:1fr;gap:0}
+  .step,.step:first-child{clip-path:polygon(0 0,50% 22px,100% 0,100% calc(100% - 22px),50% 100%,0 calc(100% - 22px));margin:-14px 0 0;min-height:0;padding:44px 28px 46px;display:grid;grid-template-columns:70px 1fr;column-gap:10px}
+  .step:first-child{clip-path:polygon(0 0,100% 0,100% calc(100% - 22px),50% 100%,0 calc(100% - 22px));margin-top:0;padding-top:28px}
   .step b{grid-row:span 2;margin:0;font-size:36px}
   .q-grid,.form-wrap{grid-template-columns:1fr;gap:40px}
-  .tl{grid-template-columns:1fr 1fr;row-gap:40px}.tl:before{display:none}
+  .tl{grid-template-columns:1fr;row-gap:34px}.tl:before{top:28px;bottom:28px;left:38px;right:auto;width:2px;height:auto;background:linear-gradient(180deg,var(--blue),var(--red))}
+  .tl>div{padding-left:96px;min-height:56px;text-align:left}.tl i{position:absolute;left:11px;top:0;margin:0}
 }
 @media (max-width:860px){
   nav{display:none}.burger{display:block}
@@ -285,7 +288,7 @@ footer .org a{color:#8fc4ff}footer .org a:hover{color:#fff}
 }
 .card .pl{stroke:#fff}.card:hover .pl{stroke:var(--c)}
 .card,.au,.step,.qs li,.tl>div,.lead-card,.stats div,.cd div{cursor:pointer}
-@media (max-width:560px){.dl-top{justify-content:center;text-align:center}.dl-top .eyebrow{justify-content:center}.tl>div{text-align:center}.tl i{margin:0 auto 24px}}
+@media (max-width:560px){.dl-top{justify-content:center;text-align:center}.dl-top .eyebrow{justify-content:center}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style>
 </head>
@@ -470,20 +473,21 @@ footer .org a{color:#8fc4ff}footer .org a:hover{color:#fff}
       <div class="fields">
         <div class="fh"><b>Заявка на участие</b><span><i style="color:var(--red);font-style:normal">*</i> обязательные поля</span></div>
         <div class="row">
-          <div class="fld" data-v="req"><input id="i-name" name="name" placeholder=" " autocomplete="name"><label for="i-name">Имя и фамилия <span class="req">*</span></label><div class="err">Укажите, как к вам обращаться</div></div>
-          <div class="fld" data-v="req"><input id="i-co" name="company" placeholder=" " autocomplete="organization"><label for="i-co">Компания <span class="req">*</span></label><div class="err">Укажите название компании</div></div>
+          <div class="fld" data-v="req"><input id="i-name" name="name" maxlength="120" placeholder=" " autocomplete="name"><label for="i-name">Имя и фамилия <span class="req">*</span></label><div class="err">Укажите, как к вам обращаться</div></div>
+          <div class="fld" data-v="req"><input id="i-co" name="company" maxlength="160" placeholder=" " autocomplete="organization"><label for="i-co">Компания <span class="req">*</span></label><div class="err">Укажите название компании</div></div>
         </div>
         <div class="row">
-          <div class="fld" data-v="email"><input id="i-mail" name="email" placeholder=" " inputmode="email" autocomplete="email"><label for="i-mail">E-mail <span class="req">*</span></label><div class="err">Введите корректный e-mail, например name@company.ru</div></div>
-          <div class="fld" data-v="phone"><input id="i-tel" name="phone" placeholder=" " inputmode="tel" autocomplete="tel"><label for="i-tel">Телефон</label><div class="err">Проверьте номер: +7 и 10 цифр</div></div>
+          <div class="fld" data-v="email"><input id="i-mail" name="email" maxlength="160" placeholder=" " inputmode="email" autocomplete="email"><label for="i-mail">E-mail <span class="req">*</span></label><div class="err">Введите корректный e-mail, например name@company.ru</div></div>
+          <div class="fld" data-v="phone"><input id="i-tel" name="phone" maxlength="20" placeholder=" " inputmode="tel" autocomplete="tel"><label for="i-tel">Телефон</label><div class="err">Проверьте номер: +7 и 10 цифр</div></div>
         </div>
         <div class="row">
-          <div class="fld"><div class="sel" data-name="type"><button type="button" aria-haspopup="listbox"></button><label>Кто вы</label><ul role="listbox"><li>Технологическая компания</li><li>Стартап</li><li>Футбольный клуб</li><li>Научная / образовательная организация</li><li>Другое</li></ul></div></div>
-          <div class="fld"><div class="sel" data-name="area"><button type="button" aria-haspopup="listbox"></button><label>Направление</label><ul role="listbox"><li>ИИ и Big Data</li><li>Цифровые сервисы</li><li>Спортивная аналитика</li><li>Технологии для болельщиков</li><li>Умные стадионы</li><li>Медицина и биомеханика</li><li>Автоматизация клубов</li><li>Коммерческие технологии</li></ul></div></div>
+          <div class="fld" data-v="sel"><div class="sel" data-name="type"><button type="button" aria-haspopup="listbox"></button><label>Кто вы <span class="req">*</span></label><ul role="listbox"><li>Технологическая компания</li><li>Стартап</li><li>Футбольный клуб</li><li>Научная / образовательная организация</li><li>Другое</li></ul></div><div class="err">Выберите, кто вы</div></div>
+          <div class="fld" data-v="sel"><div class="sel" data-name="area"><button type="button" aria-haspopup="listbox"></button><label>Направление <span class="req">*</span></label><ul role="listbox"><li>ИИ и Big Data</li><li>Цифровые сервисы</li><li>Спортивная аналитика</li><li>Технологии для болельщиков</li><li>Умные стадионы</li><li>Медицина и биомеханика</li><li>Автоматизация клубов</li><li>Коммерческие технологии</li></ul></div><div class="err">Выберите направление</div></div>
         </div>
-        <div class="fld" data-v="about"><textarea id="i-about" name="about" placeholder=" "></textarea><label for="i-about">О проекте: решение, задача, стадия, клиенты <span class="req">*</span></label><div class="err">Опишите проект хотя бы в паре предложений (от 30 символов)</div></div>
-        <div class="fld" data-v="url"><input id="i-link" name="link" placeholder=" " inputmode="url"><label for="i-link">Сайт или ссылка на презентацию</label><div class="err">Ссылка должна начинаться с http:// или https://</div></div>
+        <div class="fld" data-v="about"><textarea id="i-about" name="about" maxlength="5000" placeholder=" "></textarea><label for="i-about">О проекте: решение, задача, стадия, клиенты <span class="req">*</span></label><div class="err">Опишите проект хотя бы в паре предложений (от 30 символов)</div></div>
+        <div class="fld" data-v="url"><input id="i-link" name="link" maxlength="500" placeholder=" " inputmode="url"><label for="i-link">Сайт или ссылка на презентацию</label><div class="err">Ссылка должна начинаться с http:// или https://</div></div>
         <div class="fld" data-v="file"><label class="file" id="fl"><input type="file" name="deck" accept=".pdf,.ppt,.pptx,.key"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12l-9 9a6 6 0 01-8-8l9-9a4 4 0 016 6l-9 9a2 2 0 01-3-3l8-8"/></svg><em style="font-style:normal" id="fn">Приложить презентацию</em><small>PDF, PPTX · до 20 МБ</small></label><div class="err">Файл должен быть PDF, PPT, PPTX или KEY и не больше 20 МБ</div></div>
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <div class="fld" data-v="agree"><label class="agree"><input type="checkbox" name="agree"><i></i><span>Согласен с <a href="https://premierliga.ru/resources/53/52/280322_privacy_policy_RPL_IT.pdf" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:underline">политикой обработки персональных данных</a></span></label><div class="err">Нужно ваше согласие, чтобы мы могли связаться с вами</div></div>
         <button class="btn" type="submit">Предложить проект <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </div>
@@ -535,6 +539,7 @@ footer .org a{color:#8fc4ff}footer .org a:hover{color:#fff}
 <script>
 // form endpoint: set to backend/Formspree/Telegram-bot URL when ready
 const FORM_ENDPOINT = '';
+const T0=Date.now();
 // reveal
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.rv').forEach((el,i)=>{el.style.transitionDelay=(el.classList.contains('card')||el.classList.contains('au')?(i%4)*80:0)+'ms';io.observe(el)});
@@ -559,14 +564,14 @@ document.querySelectorAll('.qs li').forEach(li=>li.addEventListener('click',()=>
 // custom selects
 const sels={};
 document.querySelectorAll('.sel').forEach(s=>{const b=s.querySelector('button'),li=[...s.querySelectorAll('li')];let hl=0;
- const set=i=>{li.forEach(x=>x.classList.remove('on'));li[i].classList.add('on');b.textContent=li[i].textContent;s.value=li[i].textContent;s.idx=i};
+ const set=i=>{li.forEach(x=>x.classList.remove('on'));if(i<0){b.textContent='Выберите…';b.classList.add('ph');s.value='';s.idx=-1;return}li[i].classList.add('on');b.textContent=li[i].textContent;b.classList.remove('ph');s.value=li[i].textContent;s.idx=i;s.parentNode.classList.remove('bad')};
  const close=()=>s.classList.remove('open');
  const mark=i=>{hl=(i+li.length)%li.length;li.forEach(x=>x.classList.remove('hl'));li[hl].classList.add('hl')};
- set(0);sels[s.dataset.name]={set,el:s};
- b.onclick=()=>{document.querySelectorAll('.sel.open').forEach(o=>o!==s&&o.classList.remove('open'));s.classList.toggle('open');mark(s.idx)};
+ set(-1);sels[s.dataset.name]={set,el:s};
+ b.onclick=()=>{document.querySelectorAll('.sel.open').forEach(o=>o!==s&&o.classList.remove('open'));s.classList.toggle('open');mark(Math.max(s.idx,0))};
  li.forEach((x,i)=>{x.setAttribute('role','option');x.onclick=()=>{set(i);close();b.focus()}});
  b.onkeydown=e=>{const o=s.classList.contains('open');
-  if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(!o){s.classList.add('open');mark(s.idx)}else mark(hl+(e.key==='ArrowDown'?1:-1))}
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(!o){s.classList.add('open');mark(Math.max(s.idx,0))}else mark(hl+(e.key==='ArrowDown'?1:-1))}
   else if((e.key==='Enter'||e.key===' ')&&o){e.preventDefault();set(hl);close()}else if(e.key==='Escape'||e.key==='Tab')close()}});
 document.addEventListener('click',e=>{if(!e.target.closest('.sel'))document.querySelectorAll('.sel.open').forEach(s=>s.classList.remove('open'))});
 // file
@@ -581,9 +586,9 @@ const V={
  url:v=>!v.trim()||/^https?:\/\/\S+\.\S+/.test(v.trim()),
  file:()=>{const x=fileIn.files[0];return !x||(/\.(pdf|pptx?|key)$/i.test(x.name)&&x.size<=20*1024*1024)},
  agree:()=>f.agree.checked};
-function check(d){const i=d.querySelector('input,textarea');const ok=V[d.dataset.v](i?i.value:'');d.classList.toggle('bad',!ok);return ok}
+function check(d){const i=d.querySelector('input,textarea'),sl=d.querySelector('.sel');const ok=sl?!!sl.value:V[d.dataset.v](i?i.value:'');d.classList.toggle('bad',!ok);return ok}
 f.querySelectorAll('.fld[data-v]').forEach(d=>{const i=d.querySelector('input,textarea');
- if(i.type==='checkbox'){i.addEventListener('change',()=>check(d));return}
+ if(!i)return;if(i.type==='checkbox'){i.addEventListener('change',()=>check(d));return}
  if(i.type==='file')return;
  i.addEventListener('blur',()=>{if(i.value||d.classList.contains('bad'))check(d)});
  i.addEventListener('input',()=>{if(d.classList.contains('bad'))check(d)})});
@@ -591,15 +596,15 @@ f.querySelectorAll('.fld[data-v]').forEach(d=>{const i=d.querySelector('input,te
 f.phone.addEventListener('input',e=>{let d=e.target.value.replace(/\D/g,'');if(!d){e.target.value='';return}if(d[0]==='8')d='7'+d.slice(1);if(d[0]!=='7')d='7'+d;d=d.slice(0,11);
  let r='+7';if(d.length>1)r+=' ('+d.slice(1,4);if(d.length>=4)r+=') '+d.slice(4,7);if(d.length>=7)r+='-'+d.slice(7,9);if(d.length>=9)r+='-'+d.slice(9,11);e.target.value=r});
 const BTN=f.querySelector('.btn').innerHTML;
-f.onsubmit=async e=>{e.preventDefault();let first=null;f.querySelector('.send-err')?.remove();
+f.onsubmit=async e=>{e.preventDefault();if(f.website.value||Date.now()-T0<3000)return;let first=null;f.querySelector('.send-err')?.remove();
  f.querySelectorAll('.fld[data-v]').forEach(d=>{d.style.animation='none';d.offsetWidth;d.style.animation='';if(!check(d)&&!first)first=d});
- if(first){first.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>first.querySelector('input,textarea')?.focus({preventScroll:true}),400);return}
+ if(first){first.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>first.querySelector('input,textarea,.sel>button')?.focus({preventScroll:true}),400);return}
  const btn=f.querySelector('.btn');btn.disabled=true;btn.textContent='Отправляем…';
  const fd=new FormData(f);Object.entries(sels).forEach(([k,s])=>fd.set(k,s.el.value));
  try{if(FORM_ENDPOINT){const r=await fetch(FORM_ENDPOINT,{method:'POST',body:fd});if(!r.ok)throw 0}}
  catch(_){btn.disabled=false;btn.innerHTML=BTN;const n=document.createElement('div');n.className='fld bad send-err';n.innerHTML='<div class="err">Не удалось отправить заявку. Проверьте соединение и попробуйте ещё раз.</div>';btn.before(n);return}
  f.classList.add('sent');f.scrollIntoView({behavior:'smooth',block:'center'})};
-again.onclick=()=>{f.reset();fn.textContent='Приложить презентацию';fl.classList.remove('has');Object.values(sels).forEach(s=>s.set(0));f.classList.remove('sent');const b=f.querySelector('.btn');b.disabled=false;b.innerHTML=BTN};
+again.onclick=()=>{f.reset();fn.textContent='Приложить презентацию';fl.classList.remove('has');Object.values(sels).forEach(s=>s.set(-1));f.classList.remove('sent');const b=f.querySelector('.btn');b.disabled=false;b.innerHTML=BTN};
 </script>
 </body>
 </html>
